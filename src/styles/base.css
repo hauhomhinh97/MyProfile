@@ -1,0 +1,227 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 70% 58% at 50% 46%, rgba(43, 183, 168, 0.2), transparent 62%),
+    radial-gradient(ellipse 55% 48% at 58% 52%, rgba(212, 162, 106, 0.16), transparent 58%),
+    radial-gradient(ellipse 40% 36% at 42% 40%, rgba(240, 196, 138, 0.08), transparent 55%),
+    var(--bg-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html[data-theme="ember"] body {
+  background:
+    radial-gradient(ellipse 70% 58% at 50% 46%, rgba(255, 138, 76, 0.18), transparent 62%),
+    radial-gradient(ellipse 55% 48% at 58% 52%, rgba(232, 184, 109, 0.14), transparent 58%),
+    var(--bg-0);
+}
+
+html[data-theme="ice"] body {
+  background:
+    radial-gradient(ellipse 70% 58% at 50% 46%, rgba(94, 224, 196, 0.18), transparent 62%),
+    radial-gradient(ellipse 55% 48% at 58% 52%, rgba(126, 200, 227, 0.14), transparent 58%),
+    var(--bg-0);
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.boot-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(240, 196, 138, 0.35), transparent 55%);
+  opacity: 0;
+}
+
+body.is-booting .boot-flash {
+  animation: boot-flash 0.9s var(--ease-out) both;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.03;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.045) 0,
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: soft-light;
+}
+
+.shader,
+.aurora,
+.fx-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.shader {
+  z-index: 0;
+}
+
+.aurora {
+  z-index: 1;
+}
+
+.aurora.is-overlay {
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.fx-layer {
+  z-index: 12;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, transparent 38%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+.cursor-glow {
+  position: fixed;
+  z-index: 1;
+  width: 42vmax;
+  height: 42vmax;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    var(--glow-accent) 0%,
+    var(--glow-teal) 28%,
+    transparent 68%
+  );
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: left, top;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor__dot {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: var(--accent-hot);
+  box-shadow: 0 0 12px var(--glow-accent);
+}
+
+.cursor__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 196, 138, 0.7);
+  box-shadow: 0 0 18px var(--glow-accent);
+  transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-soft);
+}
+
+.cursor.is-pressed .cursor__ring {
+  transform: scale(0.65);
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor-glow,
+  .cursor,
+  .scanlines,
+  .boot-flash {
+    display: none;
+  }
+
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto !important;
+  }
+}

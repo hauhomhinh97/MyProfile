@@ -1,0 +1,12 @@
+{
+  "name": "myprofile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-screen cinematic developer profile",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node build.mjs && python serve.py",
+    "dev": "node build.mjs && python serve.py",
+    "start:node": "node build.mjs && node server.mjs"
+  }
+}

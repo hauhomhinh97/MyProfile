@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Nguyen Hau — Creative Developer. Single-screen profile showcasing craft in CSS & JavaScript."
+    />
+    <title>Nguyen Hau — Creative Developer</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./src/styles/tokens.css" />
+    <link rel="stylesheet" href="./src/styles/base.css" />
+    <link rel="stylesheet" href="./src/styles/stage.css" />
+    <link rel="stylesheet" href="./src/styles/orbit.css" />
+    <link rel="stylesheet" href="./src/styles/overlays.css" />
+    <link rel="stylesheet" href="./src/styles/motion.css" />
+  </head>
+  <body>
+    <div class="boot-flash" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <canvas id="aurora" class="aurora is-overlay" aria-hidden="true"></canvas>
+    <canvas id="fx" class="fx-layer" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <span class="cursor__ring"></span>
+      <span class="cursor__dot"></span>
+    </div>
+
+    <div class="stage" id="stage">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">NGUYEN HAU</span>
+        </div>
+        <nav class="topbar__nav" aria-label="Primary">
+          <button class="nav-btn" type="button" data-open="about">About</button>
+          <button class="nav-btn" type="button" data-open="work">Work</button>
+          <button class="nav-btn nav-btn--accent" type="button" data-open="contact">
+            Contact
+          </button>
+        </nav>
+      </header>
+
+      <main class="hero" id="hero">
+        <div class="hero__orbit" id="orbit" aria-label="Skill constellation">
+          <svg class="orbit__links" id="orbitLinks" aria-hidden="true"></svg>
+          <div class="liquid" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="liquid__svg">
+              <defs>
+                <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(43,183,168,0.55)" />
+                  <stop offset="100%" stop-color="rgba(212,162,106,0.45)" />
+                </linearGradient>
+              </defs>
+              <path
+                class="liquid__path"
+                fill="url(#liquidGrad)"
+                d="M40.5,-59.4C52.9,-51.2,63.3,-40.1,69.8,-26.6C76.3,-13.1,78.9,2.8,74.8,17.1C70.7,31.4,60,44.1,46.7,54.2C33.4,64.3,17.7,71.8,1.2,70.1C-15.3,68.5,-30.6,57.7,-43.8,46.1C-57,34.5,-68.1,22.1,-72.1,7.1C-76.1,-7.9,-73,-25.5,-63.5,-38.4C-54,-51.3,-38.1,-59.5,-22.7,-66.2C-7.3,-72.9,7.6,-78.1,21.4,-74.6C35.2,-71.1,47.9,-58.9,40.5,-59.4Z"
+                transform="translate(100 100)"
+              />
+            </svg>
+          </div>
+          <div class="hero__core" id="core">
+            <span class="hero__core-border" aria-hidden="true"></span>
+            <p class="hero__eyebrow">Creative Developer</p>
+            <h1 class="hero__name" aria-label="Nguyen Hau">
+              <span class="hero__name-line" data-scramble="NGUYEN">NGUYEN</span>
+              <span class="hero__name-line hero__name-line--accent" data-scramble="HAU">HAU</span>
+            </h1>
+            <p class="hero__tagline">
+              Interfaces that feel alive — crafted in one frame.
+            </p>
+            <div class="hero__actions">
+              <button class="btn btn--primary" type="button" data-open="contact">
+                <span>Let’s talk</span>
+              </button>
+              <button class="btn btn--ghost" type="button" data-open="work">
+                Selected work
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="hud" aria-label="Status">
+        <div class="hud__item">
+          <span class="hud__label">Engine</span>
+          <span class="hud__value" id="hudEngine">CANVAS</span>
+        </div>
+        <div class="hud__item">
+          <span class="hud__label">Mode</span>
+          <span class="hud__value" id="hudMode">ORBIT</span>
+        </div>
+        <div class="hud__item">
+          <span class="hud__label">Focus</span>
+          <span class="hud__value" id="hudFocus">—</span>
+        </div>
+        <div class="hud__item">
+          <span class="hud__label">FPS</span>
+          <span class="hud__value" id="hudFps">60</span>
+        </div>
+      </aside>
+
+      <footer class="dock">
+        <p class="dock__hint" id="dockHint">
+          Warp the field · Pull nodes · Click for shockwave
+        </p>
+        <div class="dock__controls">
+          <button class="icon-btn" type="button" id="toggleMotion" aria-pressed="true" title="Toggle motion">
+            Motion
+          </button>
+          <button class="icon-btn" type="button" id="toggleTheme" title="Shift palette">
+            Palette
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <div class="detail" id="detail" hidden>
+      <div class="detail__panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+        <button class="detail__close" type="button" id="detailClose" aria-label="Close">
+          ×
+        </button>
+        <p class="detail__kicker" id="detailKicker"></p>
+        <h2 class="detail__title" id="detailTitle"></h2>
+        <p class="detail__body" id="detailBody"></p>
+        <ul class="detail__tags" id="detailTags"></ul>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay" hidden>
+      <div class="overlay__panel" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+        <button class="overlay__close" type="button" data-close-overlay aria-label="Close">
+          ×
+        </button>
+        <p class="overlay__kicker" id="overlayKicker"></p>
+        <h2 class="overlay__title" id="overlayTitle"></h2>
+        <div class="overlay__content" id="overlayContent"></div>
+      </div>
+    </div>
+
+    <script src="./src/js/app.bundle.js" defer></script>
+  </body>
+</html>
